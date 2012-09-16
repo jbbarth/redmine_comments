@@ -1,3 +1,7 @@
+ActionDispatch::Callbacks.to_prepare do
+  require_dependency 'redmine_comments/issue_patch'
+end
+
 Redmine::Plugin.register :redmine_comments do
   name 'Redmine Comments plugin'
   description 'Private comments in issues for staff users'
