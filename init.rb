@@ -1,3 +1,10 @@
+# Little hack for deface in redmine:
+# - redmine plugins are not railties nor engines, so deface overrides are not detected automatically
+# - deface doesn't support direct loading anymore ; it unloads everything at boot so that reload in dev works
+# - hack consists in adding "app/overrides" path of the plugin in Redmine's main #paths
+Rails.application.paths["app/overrides"] ||= []
+Rails.application.paths["app/overrides"] << File.expand_path("../app/overrides", __FILE__)
+
 ActionDispatch::Callbacks.to_prepare do
   require_dependency 'redmine_comments/issue_patch'
 end
