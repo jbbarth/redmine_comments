@@ -1,3 +1,6 @@
+require 'redmine'
+require 'redmine_comments/hooks'
+
 # Little hack for deface in redmine:
 # - redmine plugins are not railties nor engines, so deface overrides are not detected automatically
 # - deface doesn't support direct loading anymore ; it unloads everything at boot so that reload in dev works
@@ -5,6 +8,7 @@
 Rails.application.paths["app/overrides"] ||= []
 Rails.application.paths["app/overrides"] << File.expand_path("../app/overrides", __FILE__)
 
+# Patches to existing classes/modules
 ActionDispatch::Callbacks.to_prepare do
   require_dependency 'redmine_comments/issue_patch'
 end
@@ -17,7 +21,7 @@ Redmine::Plugin.register :redmine_comments do
   version '0.0.1'
   url 'https://github.com/jbbarth/redmine_comments'
   project_module :issue_tracking do
-    permission :view_private_comments, {}
-    permission :manage_private_comments, {}
+    permission :view_private_comments, { }
+    permission :manage_private_comments, { :issue_comments => [:new, :create] }
   end
 end
