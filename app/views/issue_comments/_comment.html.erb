@@ -1,0 +1,7 @@
+<div id="comment-<%= comment.id %>" class="issue-comment">
+  <h4>
+    <%= avatar(comment.author, :size => "24") %>
+    <%= authoring comment.created_on, comment.author, :label => :label_commented_time_by %>
+  </h4>
+  <%= content_tag(:div, textilizable(comment.comments), :class => "comments") unless comment.comments.blank? %>
+</div>

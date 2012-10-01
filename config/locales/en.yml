@@ -1,3 +1,4 @@
 en:
   permission_view_private_comments: "View private comments"
   permission_manage_private_comments: "Manage private comments"
+  label_commented_time_by: "Private comment by %{author} %{age} ago"
