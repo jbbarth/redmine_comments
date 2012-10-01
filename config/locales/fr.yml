@@ -1,4 +1,4 @@
 fr:
   permission_view_private_comments: "Voir les commentaire privés"
   permission_manage_private_comments: "Gérer les commentaires privés"
-  label_commented_time_by: "Commentaire privé par %{author} il y a %{age}"
+  label_commented_time_by: "Commentaire privé ajouté par %{author} il y a %{age}"
