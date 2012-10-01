@@ -1,8 +1,17 @@
 .icon-private-comment { background-image: url(../images/document_notes.png); margin-left:4px; margin-right:2px; }
 .issue-comment {
   margin:7px 0px 8px 20px; padding:6px; box-shadow:2px 2px 4px #ccc; font-size:12px;
-  background-color:#fff760; color:#333 !important; border:1px solid #ccc;
-  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.1, #fff6a0), color-stop(0.4, #fffbb0) );
+  color:#333 !important; border:1px solid #ccc;
+  /* yellow:
+   * background:-webkit-gradient( linear, left top, left bottom, color-stop(0.1, #fff6a0), color-stop(0.4, #fffbb0) );
+   */
+  background-color:#f4f4f4;
+  background-image: linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
+  background-image: -o-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
+  background-image: -moz-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
+  background-image: -webkit-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
+  background-image: -ms-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.1, #f4f4f4), color-stop(0.4, #eeeeee));
 }
 .issue-comment h4 { color:inherit; margin: 0 6px 8px 6px; padding-right:3px; }
 .issue-comment .comments { margin:0 5px; }
