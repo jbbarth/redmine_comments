@@ -5,13 +5,13 @@
   /* yellow:
    * background:-webkit-gradient( linear, left top, left bottom, color-stop(0.1, #fff6a0), color-stop(0.4, #fffbb0) );
    */
-  background-color:#f4f4f4;
-  background-image: linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
-  background-image: -o-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
-  background-image: -moz-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
-  background-image: -webkit-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
-  background-image: -ms-linear-gradient(bottom, #f4f4f4 10%, #eeeeee 40%);
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.1, #f4f4f4), color-stop(0.4, #eeeeee));
+  background-color:#f9f9f9;
+  background-image: linear-gradient(bottom, #f9f9f9 10%, #f2f2f2 40%);
+  background-image: -o-linear-gradient(bottom, #f9f9f9 10%, #f2f2f2 40%);
+  background-image: -moz-linear-gradient(bottom, #f9f9f9 10%, #f2f2f2 40%);
+  background-image: -webkit-linear-gradient(bottom, #f9f9f9 10%, #f2f2f2 40%);
+  background-image: -ms-linear-gradient(bottom, #f9f9f9 10%, #f2f2f2 40%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.1, #f9f9f9), color-stop(0.4, #f2f2f2));
 }
 .issue-comment h4 { color:inherit; margin: 0 6px 8px 6px; padding-right:3px; }
 .issue-comment .comments { margin:0 5px; }
