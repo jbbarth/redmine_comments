@@ -11,6 +11,7 @@ Rails.application.paths["app/overrides"] << File.expand_path("../app/overrides",
 # Patches to existing classes/modules
 ActionDispatch::Callbacks.to_prepare do
   require_dependency 'redmine_comments/issue_patch'
+  require_dependency 'redmine_comments/mailer_patch'
 end
 
 Redmine::Plugin.register :redmine_comments do

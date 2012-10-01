@@ -13,6 +13,7 @@ class IssueCommentsController < ApplicationController
     @comment.author = User.current
     if @issue.comments << @comment
       flash[:notice] = l(:label_comment_added)
+      Mailer.issue_comment_added(@comment).deliver
     end
     redirect_to @issue
   end
