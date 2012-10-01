@@ -1,5 +1,5 @@
 .icon-private-comment { background-image: url(../images/document_notes.png); margin-left:4px; margin-right:2px; }
-.issue-comment { margin:5px 0 3px; padding:6px; border:1px solid #ccc; background-color:#f0f0f0; color:#333 !important; }
+.issue-comment { margin:5px 0 3px; padding:6px; border:1px solid #ccc; background-color:#f5f5f5; color:#333 !important; }
 .issue-comment h4 { color:inherit; font-size: 12px; margin: 0 6px 8px 6px; padding-right:3px; }
 .issue-comment p { margin:5px 0; }
 .issue-comment .comments { margin:0 5px; }
