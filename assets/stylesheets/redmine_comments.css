@@ -1,6 +1,10 @@
 .icon-private-comment { background-image: url(../images/document_notes.png); margin-left:4px; margin-right:2px; }
+.issue-comment-container {
+  margin:8px 0; padding:0 0 0 20px;
+  background-image: url(../images/document_notes.png); background-repeat:no-repeat; background-position:-1px top;
+}
 .issue-comment {
-  margin:7px 0px 8px 20px; padding:6px; box-shadow:2px 2px 4px #ccc; font-size:12px;
+  margin:0; padding:6px; box-shadow:2px 2px 4px #ccc; font-size:12px;
   color:#333 !important; border:1px solid #ccc;
   /* yellow:
    * background:-webkit-gradient( linear, left top, left bottom, color-stop(0.1, #fff6a0), color-stop(0.4, #fffbb0) );
