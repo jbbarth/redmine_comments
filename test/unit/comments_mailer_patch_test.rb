@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/../test_helper'
+
 class CommentsMailerPatchTest < ActionMailer::TestCase
   include Redmine::I18n
   include ActionDispatch::Assertions::SelectorAssertions
