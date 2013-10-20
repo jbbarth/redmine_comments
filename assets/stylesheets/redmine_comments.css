@@ -25,3 +25,5 @@
   background-image: linear-gradient(hsla(210, 50%, 30%, .1) 1px, transparent 1px);
   background-size: 100% 1.5em; background-origin: content-box; background-position:0% 16px;
 }
+/* hide standard redmine private notes for redmine 2.2+ */
+label[for=issue_private_notes] { display:none; }
