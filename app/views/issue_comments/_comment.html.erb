@@ -1,9 +1,25 @@
-<div id="comment-<%= comment.id %>" class="issue-comment-container">
+<div id="comment-<%= comment.id %>-container" class="issue-comment-container">
   <div class="issue-comment">
-    <h4>
-      <%= avatar(comment.author, :size => "24") %>
-      <%= authoring comment.created_on, comment.author, :label => :label_commented_time_by %>
-    </h4>
-    <%= content_tag(:div, textilizable(comment.comments), :class => "comments") unless comment.comments.blank? %>
+
+    <%
+      editable = User.current.logged? && comment.author == User.current && User.current.allowed_to?(:manage_private_comments, @project)
+      links = []
+      if !comment.comments.blank?
+        links << link_to(image_tag('edit.png').html_safe, edit_issue_comment_path(:issue_id => @issue, :comment_id => comment.id), :remote => true, :class => "icon") if editable
+      end
+      content = content_tag('div', links.join(' ').html_safe, :class => 'contextual') unless links.empty?
+    %>
+
+    <%= content_tag('div', content.html_safe) if content %>
+
+    <div id="comment-<%= comment.id %>-title">
+      <h4>
+        <%= avatar(comment.author, :size => "24") %>
+        <%= authoring comment.created_on, comment.author, :label => :label_commented_time_by %>
+      </h4>
+    </div>
+
+    <%= content_tag(:div, textilizable(comment.comments), :class => "comments", :id => "comment-#{comment.id}") unless comment.comments.blank? %>
+
   </div>
 </div>

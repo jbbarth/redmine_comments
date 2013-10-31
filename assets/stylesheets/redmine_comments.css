@@ -19,6 +19,7 @@
 }
 .issue-comment h4 { color:inherit; margin: 0 6px 8px 6px; padding-right:3px; }
 .issue-comment .comments { margin:0 5px; }
+.issue-comment .cancel { margin-left: 5px;}
 .issue-comment p {
   margin:5px 0; font:100%/1.5 'Lucida Grande', verdana, arial, helvetica, sans-serif;
   background-image: -webkit-linear-gradient(hsla(210, 50%, 30%, .1) 1px, transparent 1px);

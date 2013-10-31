@@ -18,6 +18,19 @@ class IssueCommentsController < ApplicationController
     redirect_to @issue
   end
 
+  def edit
+    @comment = Comment.find(params[:comment_id])
+  end
+
+  def update
+    @comment = Comment.find(params[:comment_id])
+    @comment.safe_attributes = params[:comment]
+    if @comment.save
+      flash[:notice] = l(:label_comment_updated)
+    end
+    redirect_to @issue
+  end
+
   private
   # Adapted from IssuesController
   # Also finds the project issues is attached to

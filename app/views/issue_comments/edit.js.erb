@@ -1,0 +1,7 @@
+$("#comment-<%= @comment.id %>").hide();
+if ($("form#comment-<%= @comment.id %>-form").length > 0) {
+    $("#comment-<%= @comment.id %>-form").show();
+} else {
+    $("#comment-<%= @comment.id %>-title").after('<%= escape_javascript(render :partial => 'edit_form', comment: @comment) %>');
+}
+showAndScrollTo("form#comment-<%= @comment.id %>-form", "comment_comments")

@@ -24,6 +24,6 @@ Redmine::Plugin.register :redmine_comments do
   requires_redmine :version_or_higher => '2.1.0'
   project_module :issue_tracking do
     permission :view_private_comments, { }
-    permission :manage_private_comments, { :issue_comments => [:new, :create] }
+    permission :manage_private_comments, { :issue_comments => [:new, :create, :edit, :update] }
   end
 end
