@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.expand_path('../../test_helper', __FILE__)
 
 class IssueTest < ActiveSupport::TestCase
   fixtures :users, :issues, :issue_statuses, :projects, :projects_trackers, :trackers, :enumerations
