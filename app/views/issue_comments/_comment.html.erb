@@ -4,7 +4,7 @@
     <%
       editable = User.current.admin? || (comment.author == User.current && User.current.allowed_to?(:manage_private_comments, @project))
       links = []
-      links << link_to(image_tag('edit.png').html_safe, edit_issue_comment_path(:issue_id => @issue, :comment_id => comment.id), :remote => true, :class => "icon") if editable
+      links << link_to(image_tag('edit.png').html_safe, edit_issue_comment_path(:issue_id => @issue, :comment_id => comment.id), :remote => true, :class => "icon", :id => "comment-button-#{comment.id}") if editable
       actions = content_tag('div', links.join(' ').html_safe, :class => 'contextual') unless links.empty?
     %>
 

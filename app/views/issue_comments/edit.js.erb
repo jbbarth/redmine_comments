@@ -1,4 +1,5 @@
 $("#comment-<%= @comment.id %>").hide();
+$("#comment-button-<%= @comment.id %>").hide();
 
 if ($("form#comment-<%= @comment.id %>-form").length > 0) {
     $("#comment-<%= @comment.id %>-form").show();
