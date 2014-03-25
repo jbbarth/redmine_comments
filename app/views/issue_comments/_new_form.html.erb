@@ -5,5 +5,10 @@
     <%= text_area 'comment', 'comments', :cols => 80, :rows => 10, :class => 'wiki-edit' %>
     <%= wikitoolbar_for 'comment_comments' %>
   </div>
-  <p><%= submit_tag l(:button_add) %></p>
+  <p>
+    <%= submit_tag l(:button_add) %>
+    <%= preview_link preview_comment_path, 'add_comment_form', "comment_preview" %>
+  </p>
 <% end %>
+
+<div id="comment_preview"></div>

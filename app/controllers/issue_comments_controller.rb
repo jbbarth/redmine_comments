@@ -1,7 +1,7 @@
 #adapted from CommentsController for commenting News
 class IssueCommentsController < ApplicationController
-  before_filter :find_issue
-  before_filter :authorize
+  before_filter :find_issue, except: [:preview]
+  before_filter :authorize, except: [:preview]
 
   def new
     @comment = Comment.new
@@ -29,6 +29,11 @@ class IssueCommentsController < ApplicationController
       flash[:notice] = l(:label_comment_updated)
     end
     redirect_to @issue
+  end
+
+  def preview
+    @description = (params[:comment] ? params[:comment][:comments] : nil)
+    render :layout => false
   end
 
   private
