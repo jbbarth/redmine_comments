@@ -63,4 +63,24 @@ class IssueCommentsControllerTest < ActionController::TestCase
       assert_equal "Awesome updated ticket!", comment.reload.comments
     end
   end
+
+  def test_preview_new
+    string = "New comment description"
+    post :preview,
+         :comment => {:comments => string}
+    assert_response :success
+    assert_template 'issue_comments/preview'
+    assert_equal assigns(:description), string
+    assert_tag :p, :content => string
+  end
+
+  def test_preview_edit
+    string = "Updated comment description"
+    put :preview,
+         :comment => {:comments => string}
+    assert_response :success
+    assert_template 'issue_comments/preview'
+    assert_equal assigns(:description), string
+    assert_tag :p, :content => string
+  end
 end
