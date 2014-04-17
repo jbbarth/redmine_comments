@@ -3,4 +3,4 @@
 <%= @comment.comments if @comment.comments.present? %>
 
 ----------------------------------------
-<%= render :partial => 'issue', :formats => [:text], :locals => { :issue => @issue, :issue_url => @issue_url } %>
+<%= render :partial => 'issue', :formats => [:text], :locals => { :issue => @issue, :issue_url => @issue_url, :users => @recipients } %>
