@@ -21,7 +21,7 @@ Redmine::Plugin.register :redmine_comments do
   author_url 'mailto:jeanbaptiste.barth@gmail.com'
   version '0.0.1'
   url 'https://github.com/jbbarth/redmine_comments'
-  requires_redmine :version_or_higher => '2.1.0'
+  requires_redmine :version_or_higher => '2.5.0'
   project_module :issue_tracking do
     permission :view_private_comments, { }
     permission :manage_private_comments, { :issue_comments => [:new, :create, :edit, :update] }
