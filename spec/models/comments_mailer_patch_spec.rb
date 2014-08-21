@@ -1,6 +1,6 @@
-require File.expand_path('../../test_helper', __FILE__)
+require "spec_helper"
 
-class CommentsMailerPatchTest < ActionMailer::TestCase
+describe "CommentsMailerPatch" do
   include Redmine::I18n
   include ActionDispatch::Assertions::SelectorAssertions
   fixtures :projects, :enabled_modules, :issues, :users, :members,
@@ -12,7 +12,7 @@ class CommentsMailerPatchTest < ActionMailer::TestCase
            :versions,
            :comments
 
-  def setup
+  before do
     ActionMailer::Base.deliveries.clear
     Setting.host_name = 'mydomain.foo'
     Setting.protocol = 'http'
@@ -20,7 +20,7 @@ class CommentsMailerPatchTest < ActionMailer::TestCase
     Role.find(2).add_permission!(:view_private_comments) #dlopper but not jsmith
   end
 
-  def test_issue_comment_added
+  it "should issue comment added" do
     issue = Issue.first
     comment = Comment.create!(:commented => issue, :comments => "Blah", :author => User.find(1))
 
@@ -30,7 +30,7 @@ class CommentsMailerPatchTest < ActionMailer::TestCase
  
     # Test the body of the sent email contains what we expect it to
     user = User.find(3)
-    assert_equal [user.mail], email.bcc
+    email.bcc.should == [user.mail]
     assert email.subject.match(/COMMENT/)
   end
 end
