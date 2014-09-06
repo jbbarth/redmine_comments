@@ -14,3 +14,8 @@ want to use Redmine's default feature, or if you upgrade from Redmine 2.1.x.
 This plugin's comments will probably be migrated to the standard Redmine feature
 in the next few months.  See http://www.redmine.org/issues/1554 for more
 informations.
+
+Screenshot
+----------
+
+![plugin screenshot](https://raw.githubusercontent.com/jbbarth/redmine_comments/master/assets/images/screenshot.png)
