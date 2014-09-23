@@ -1,9 +1,9 @@
 .icon-private-comment { background-image: url(../images/document_notes.png); margin-left:4px; margin-right:2px; }
-.issue-comment-container {
+.issue-private-note-container {
   margin:8px 0; padding:0 0 0 20px;
   background-image: url(../images/document_notes.png); background-repeat:no-repeat; background-position:-1px top;
 }
-.issue-comment {
+.journal.has-notes.private-notes {
   margin:0; padding:6px; box-shadow:2px 2px 4px #ccc; font-size:12px;
   color:#333 !important; border:1px solid #ccc;
   /* yellow:
@@ -17,14 +17,3 @@
   background-image: -ms-linear-gradient(bottom, #f7f7f9 10%, #f2f2f5 40%);
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.1, #f7f7f9), color-stop(0.4, #f2f2f5));
 }
-.issue-comment h4 { color:inherit; margin: 0 6px 8px 6px; padding-right:3px; }
-.issue-comment .comments { margin:0 5px; }
-.issue-comment .cancel { margin-left: 5px;}
-.issue-comment p {
-  margin:5px 0; font:100%/1.5 'Lucida Grande', verdana, arial, helvetica, sans-serif;
-  background-image: -webkit-linear-gradient(hsla(210, 50%, 30%, .1) 1px, transparent 1px);
-  background-image: linear-gradient(hsla(210, 50%, 30%, .1) 1px, transparent 1px);
-  background-size: 100% 1.5em; background-origin: content-box; background-position:0% 16px;
-}
-/* hide standard redmine private notes for redmine 2.2+ */
-label[for=issue_private_notes], input#issue_private_notes { display:none; }

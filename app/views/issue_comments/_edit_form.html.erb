@@ -1,9 +1,0 @@
-<%= form_tag({:controller => 'issue_comments', :action => 'update', :comment_id => @comment, :issue_id => @issue}, :method => :put, :id => "comment-#{@comment.id}-form") do %>
-  <%= text_area 'comment', 'comments', :cols => 80, :rows => 10, :class => 'wiki-edit', id: "comment_comments_#{@comment.id}" %>
-  <%= wikitoolbar_for "comment_comments_#{@comment.id}" %>
-  <%= submit_tag l(:button_update) %>
-  <%= preview_link preview_comment_path, "comment-#{@comment.id.to_s}-form", "comment_preview_#{@comment.id.to_s}" %>
-  <%= link_to l(:button_cancel), '#', class: "cancel", :onclick => "$('#comment-#{@comment.id}-form').remove(); $('#comment_preview_#{@comment.id.to_s}').hide();$('#comment-#{@comment.id}').show();$('#comment-button-#{@comment.id}').show(); return false;" %>
-<% end %>
-
-<div id="comment_preview_<%= @comment.id.to_s %>"></div>
