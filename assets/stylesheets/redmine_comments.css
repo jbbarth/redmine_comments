@@ -17,3 +17,6 @@
   background-image: -ms-linear-gradient(bottom, #f7f7f9 10%, #f2f2f5 40%);
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.1, #f7f7f9), color-stop(0.4, #f2f2f5));
 }
+
+/* hide standard redmine private notes for redmine 2.2+ */
+label[for=issue_private_notes], input#issue_private_notes { display:none; }
