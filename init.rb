@@ -10,5 +10,5 @@ Redmine::Plugin.register :redmine_comments do
   url 'https://github.com/jbbarth/redmine_comments'
   requires_redmine :version_or_higher => '2.5.0'
   requires_redmine_plugin :redmine_base_deface, :version_or_higher => '0.0.1'
-  requires_redmine_plugin :redmine_base_rspec, :version_or_higher => '0.0.3' if Rails.env.test?
+  requires_redmine_plugin :redmine_base_rspec, :version_or_higher => '0.0.4' if Rails.env.test?
 end
