@@ -10,3 +10,9 @@ Deface::Override.new :virtual_path  => 'issues/_history',
   <%= render_original %>
 <% end %>
 EOS
+
+Deface::Override.new :virtual_path => 'issues/_history',
+                     :original     => 'ee65ebb813ba3bbf55bc8dc6279f431dbb405c48',
+                     :name         => 'list-attachments-in-notes',
+                     :insert_after => "erb[loud]:contains(\"render_notes\")",
+                     :partial      => 'issues/list_attachments_in_notes'

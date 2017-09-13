@@ -1,0 +1,15 @@
+<% if journal.journal_attachments.any? %>
+      <% options = {
+      :editable => journal.attachments_editable?,
+      :deletable => journal.attachments_deletable?,
+      :author => true,
+      :thumbnails => true
+                       } %>
+  <%= render :partial => 'attachments/links',
+             :locals => {
+                 :container => journal,
+                 :attachments => journal.journal_attachments,
+                 :options => options,
+                 :thumbnails => (options[:thumbnails] && Setting.thumbnails_enabled?)
+      } %>
+<% end %>

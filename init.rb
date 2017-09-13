@@ -1,6 +1,11 @@
 require 'redmine'
 require 'redmine_comments/hooks'
 
+ActionDispatch::Reloader.to_prepare do
+  require_dependency 'redmine_comments/journals_controller_patch'
+  require_dependency 'redmine_comments/journal_patch'
+end
+
 Redmine::Plugin.register :redmine_comments do
   name 'Redmine Comments plugin'
   description 'Better private notes in issues for staff users'

@@ -5,6 +5,26 @@ class IssueCommentsController < ApplicationController
   def new
   end
 
+  def create
+    @journal = Journal.new(:journalized => @issue, :user => User.current, :notes => params[:journal][:notes], :private_notes => true)
+    if @journal.save
+
+      @journal.save_attachments(params[:attachments])
+      @journal.attach_saved_attachments
+
+      respond_to do |format|
+        format.html { redirect_to issue_path(@issue) }
+        format.api  { render_api_ok }
+      end
+    else
+      # render_validation_errors(@journal)
+      respond_to do |format|
+        format.html { redirect_to issue_path(@issue) }
+        format.api  { render_validation_errors(@issue) }
+      end
+    end
+  end
+
   private
 
     def find_issue

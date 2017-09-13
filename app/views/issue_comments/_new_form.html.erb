@@ -1,6 +1,6 @@
 <h3><%= l(:label_comment) %></h3>
 
-<%= labelled_form_for @issue, :html => {:id => "add_comment_form"} do |f| %>
+<%= labelled_form_for :journal, @issue.journals.build, url: issue_comments_path(issue_id: @issue.id), :html => {:id => "add_comment_form"} do |f| %>
 
   <%= error_messages_for 'issue' %>
   <div class="box">
@@ -10,10 +10,14 @@
       <%= wikitoolbar_for 'issue_comment' %>
 
       <%= f.hidden_field :private_notes, :value => true %>
+
+      <fieldset><legend><%= l(:label_attachment_plural) %></legend>
+        <div id="new-attachments" style="display:inline-block;">
+          <%= render :partial => 'attachments/form', :locals => {:container => Journal.new} %>
+        </div>
+      </fieldset>
   </div>
 
-  <%= f.hidden_field :lock_version %>
-  <%= hidden_field_tag 'last_journal_id', params[:last_journal_id] || @issue.last_journal_id %>
   <%= submit_tag l(:button_add) %>
   <%= preview_link preview_edit_issue_path(:project_id => @project, :id => @issue), 'add_comment_form', 'new_comment_preview' %>
 
