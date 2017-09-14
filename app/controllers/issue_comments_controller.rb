@@ -1,5 +1,5 @@
 class IssueCommentsController < ApplicationController
-  before_filter :find_issue
+  before_filter :find_issue, except: [:destroy_attachment]
   # before_filter :authorize
 
   def new
@@ -22,6 +22,21 @@ class IssueCommentsController < ApplicationController
         format.html { redirect_to issue_path(@issue) }
         format.api  { render_validation_errors(@issue) }
       end
+    end
+  end
+
+  def destroy_attachment
+    @attachment = Attachment.find(params[:id])
+    @issue = @attachment.container.issue
+    if @attachment.container
+      # Make sure association callbacks are called
+      @attachment.container.attachments.delete(@attachment)
+    else
+      @attachment.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to issue_path(@issue) }
+      format.api  { render_api_ok }
     end
   end
 
