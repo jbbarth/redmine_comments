@@ -5,6 +5,7 @@ ActionDispatch::Reloader.to_prepare do
   require_dependency 'redmine_comments/journals_controller_patch'
   require_dependency 'redmine_comments/journal_patch'
   require_dependency 'redmine_comments/attachment_patch'
+  require_dependency 'redmine_comments/application_helper_patch'
 end
 
 Redmine::Plugin.register :redmine_comments do
