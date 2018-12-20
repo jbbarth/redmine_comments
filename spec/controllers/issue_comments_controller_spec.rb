@@ -17,14 +17,13 @@ describe IssueCommentsController, :type => :controller do
     assert_difference 'Journal.count' do
       assert_no_difference 'JournalDetail.count' do
         assert_no_difference 'Attachment.count' do
-          xhr :post, :create,
-              {:issue_id => 1,
-               :journal => { :notes => "Attachment added", "private_notes"=>"true" },
-               :attachments => {
-                   'p0' => {
-                       'token' => attachment.token}
-               }
-              }
+          post :create, params: {:issue_id => 1,
+                                 :journal => { :notes => "Attachment added", "private_notes"=>"true" },
+                                 :attachments => {
+                                     'p0' => {
+                                         'token' => attachment.token}
+                                 }
+                                }, xhr: true
           assert_redirected_to '/issues/1'
         end
       end

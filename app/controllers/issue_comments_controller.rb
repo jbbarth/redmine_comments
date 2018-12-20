@@ -1,6 +1,6 @@
 class IssueCommentsController < ApplicationController
-  before_filter :find_issue, except: [:destroy_attachment]
-  # before_filter :authorize
+  before_action :find_issue, except: [:destroy_attachment]
+  # before_action :authorize
 
   def new
   end

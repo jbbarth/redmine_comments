@@ -1,7 +1,7 @@
 require 'redmine'
 require 'redmine_comments/hooks'
 
-ActionDispatch::Reloader.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   require_dependency 'redmine_comments/journals_controller_patch'
   require_dependency 'redmine_comments/journal_patch'
   require_dependency 'redmine_comments/attachment_patch'

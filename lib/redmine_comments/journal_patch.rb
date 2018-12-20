@@ -6,7 +6,7 @@ class Journal
   remove_method :attachments
 
   def journal_attachments
-    Attachment.where(container_id: self.id, container_type: Journal)
+    Attachment.where(container_id: self.id, container_type: Journal.name)
   end
 
   def standard_attachments_method
