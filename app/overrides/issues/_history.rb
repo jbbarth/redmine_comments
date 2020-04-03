@@ -1,4 +1,4 @@
-Deface::Override.new :virtual_path  => 'issues/_history',
+Deface::Override.new :virtual_path  => 'issues/tabs/_history',
                      :name          => 'add-container-to-private-notes',
                      :surround  => "div:contains(@id, 'change-')",
                      :text          => <<-EOS
@@ -11,7 +11,7 @@ Deface::Override.new :virtual_path  => 'issues/_history',
 <% end %>
 EOS
 
-Deface::Override.new :virtual_path => 'issues/_history',
+Deface::Override.new :virtual_path => 'issues/tabs/_history',
                      :original     => 'ee65ebb813ba3bbf55bc8dc6279f431dbb405c48',
                      :name         => 'list-attachments-in-notes',
                      :insert_after => "erb[loud]:contains(\"render_notes\")",
