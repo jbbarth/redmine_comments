@@ -1,2 +1,3 @@
 en:
   text_info_comment_visibility: "Private comments are only visible with specific roles."
+  permission_view_private_notes_from_members_with_same_role: "View private notes added by members with same role"

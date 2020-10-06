@@ -1,2 +1,3 @@
 fr:
   text_info_comment_visibility: "Les commentaires privés ne sont visibles que par certains rôles."
+  permission_view_private_notes_from_members_with_same_role: "Voir les notes privées ajoutées par les membres ayant le même rôle"
