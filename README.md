@@ -21,11 +21,17 @@ Test status
 
 |Plugin branch| Redmine Version   | Test Status       |
 |-------------|-------------------|-------------------|
-|master       | 4.1.1             | [![Build1][1]][5] |  
-|master       | 4.0.7             | [![Build2][2]][5] |
-|master       | master            | [![Build1][3]][5] |  
+|master       | 4.1.1             | [![Build1][1]][8] |  
+|master       | 4.0.7             | [![Build2][2]][8] |
+|master       | master            | [![Build1][3]][8] |  
+|preprod      | 4.1.1             | [![Build1][4]][8] |  
+|preprod      | 4.0.7             | [![Build2][5]][8] |
+|preprod      | master            | [![Build1][6]][8] |  
 
 [1]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/1
 [2]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/2
 [3]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/3
-[5]: https://travis-ci.org/jbbarth/redmine_comments
+[4]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/4
+[5]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/5
+[6]: https://travis-matrix-badges.herokuapp.com/repos/jbbarth/redmine_comments/branches/master/6
+[8]: https://travis-ci.org/jbbarth/redmine_comments
