@@ -7,7 +7,7 @@ class Journal
   has_many :journal_author_roles, dependent: :destroy
   has_many :roles, through: :journal_author_roles
 
-  before_save :save_author_roles
+  after_create :save_author_roles
 
   def journal_attachments
     Attachment.where(container_id: self.id, container_type: Journal.name)
