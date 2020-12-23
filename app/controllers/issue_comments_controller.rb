@@ -6,7 +6,21 @@ class IssueCommentsController < ApplicationController
   end
 
   def create
-    @journal = Journal.new(:journalized => @issue, :user => User.current, :notes => params[:journal][:notes], :private_notes => true)
+    @journal = Journal.new(:journalized => @issue,
+                           :user => User.current,
+                           :notes => params[:journal][:notes],
+                           :private_notes => true)
+
+    visibility_params = params[:journal][:visibility]
+    if visibility_params.present?
+      visibility_ids = visibility_params.split('|').map(&:to_i)
+      if Redmine::Plugin.installed?(:redmine_limited_visibility)
+        @journal.function_ids = visibility_ids
+      else
+        @journal.role_ids = visibility_ids
+      end
+    end
+
     if @journal.save
 
       @journal.save_attachments(params[:attachments])
@@ -14,13 +28,13 @@ class IssueCommentsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to issue_path(@issue) }
-        format.api  { render_api_ok }
+        format.api { render_api_ok }
       end
     else
       # render_validation_errors(@journal)
       respond_to do |format|
         format.html { redirect_to issue_path(@issue) }
-        format.api  { render_validation_errors(@issue) }
+        format.api { render_validation_errors(@issue) }
       end
     end
   end
@@ -36,22 +50,22 @@ class IssueCommentsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to issue_path(@issue) }
-      format.api  { render_api_ok }
+      format.api { render_api_ok }
     end
   end
 
   private
 
-    def find_issue
-      # Issue.visible.find(...) can not be used to redirect user to the login form
-      # if the issue actually exists but requires authentication
-      @issue = Issue.includes(:project, :tracker, :status, :author, :priority, :category).find(params[:issue_id])
-      unless @issue.visible?
-        deny_access
-        return
-      end
-      @project = @issue.project
-    rescue ActiveRecord::RecordNotFound
-      render_404
+  def find_issue
+    # Issue.visible.find(...) can not be used to redirect user to the login form
+    # if the issue actually exists but requires authentication
+    @issue = Issue.includes(:project, :tracker, :status, :author, :priority, :category).find(params[:issue_id])
+    unless @issue.visible?
+      deny_access
+      return
     end
+    @project = @issue.project
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 end

@@ -1,0 +1,38 @@
+<%
+  authorized_roles = Role.joins(:members)
+                         .where("members.project_id = ?", @project.id)
+                         .uniq
+                         .select { |role| role.has_permission?(:view_private_notes_from_role_or_function) }
+
+  user_functions = Function.joins(:members => [:member_roles, :user])
+                           .where("members.project_id = ?", @project.id)
+                           .where("members.user_id = ?", User.current.id)
+                           .where("member_roles.role_id IN (?)", authorized_roles.map(&:id))
+                           .where("users.status = ? ", Principal::STATUS_ACTIVE)
+
+  if @journal.present?
+    checked_roles = @journal.functions
+  else
+    checked_roles = user_functions
+  end
+
+  selectable_functions = Function.joins(:members => [:member_roles, :user])
+                                 .where("members.project_id = ?", @project.id)
+                                 .where("member_roles.role_id IN (?)", authorized_roles.map(&:id))
+                                 .where("users.status = ? ", Principal::STATUS_ACTIVE)
+                                 .distinct.sorted
+  functions_allowed_by_private_notes_groups = PrivateNotesGroup.where(group_id: user_functions.map(&:id)).map(&:function)
+  selectable_functions = selectable_functions & (functions_allowed_by_private_notes_groups | checked_roles) if functions_allowed_by_private_notes_groups.present?
+  selectable_functions = selectable_functions | checked_roles | user_functions
+%>
+
+<div class="visibility" style="margin-bottom: 0.2em;">
+  <em class="info"><%= l(:text_info_comment_visibility) %></em>
+  <% selectable_functions.each do |function| %>
+    <% involved = "involved" if checked_roles.include?(function) %>
+    <% disabled = "disabled" if involved.present? && checked_roles.size == 1 %>
+    <% css_classes = "#{involved} #{disabled} " %>
+    <%= render "issue_comments/visibility_role", :function => function, styles: css_classes %>
+  <% end %>
+</div>
+<%= hidden_field_tag "journal[visibility]", checked_roles.map(&:id).join('|'), id: "journal_visibility" %>

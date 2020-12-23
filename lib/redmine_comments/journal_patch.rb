@@ -7,7 +7,8 @@ class Journal
   has_many :journal_author_roles, dependent: :destroy
   has_many :roles, through: :journal_author_roles
 
-  after_create :save_author_roles
+  has_many :journal_author_functions, dependent: :destroy
+  has_many :functions, through: :journal_author_functions
 
   def journal_attachments
     Attachment.where(container_id: self.id, container_type: Journal.name)
@@ -17,16 +18,12 @@ class Journal
     journalized.respond_to?(:attachments) ? journalized.attachments : []
   end
 
-  def has_one_of_those_roles?(array_of_roles)
+  def has_one_of_these_roles?(array_of_roles)
     self.roles.any? {|role| array_of_roles.include?(role) }
   end
 
-  private
-
-  def save_author_roles
-    if User.current.present?
-      self.roles = User.current.roles_for_project(project)
-    end
+  def has_one_of_these_functions?(array_of_functions)
+    self.functions.any? {|f| array_of_functions.include?(f) }
   end
 
 end

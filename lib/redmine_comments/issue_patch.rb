@@ -15,9 +15,14 @@ class Issue
     unless user.allowed_to?(:view_private_notes, project)
       ####
       ## START PATCH
-      if user.allowed_to?(:view_private_notes_from_members_with_same_role, project)
+      if user.allowed_to?(:view_private_notes_from_role_or_function, project)
         result.select! do |journal|
-          !journal.private_notes? || journal.user == user || journal.has_one_of_those_roles?(user.roles_for_project(project))
+          if Redmine::Plugin.installed?(:redmine_limited_visibility)
+            visible = (journal.functions & user.functions_for_project(project)).any?
+          else
+            visible = (journal.roles & user.roles_for_project(project)).any?
+          end
+          !journal.private_notes? || journal.user == user || visible
         end
       else
         result.select! do |journal|

@@ -7,6 +7,7 @@ ActiveSupport::Reloader.to_prepare do
   require_dependency 'redmine_comments/issue_patch'
   require_dependency 'redmine_comments/attachment_patch'
   require_dependency 'redmine_comments/application_helper_patch'
+  require_dependency 'redmine_comments/journals_helper_patch'
 end
 
 Redmine::Plugin.register :redmine_comments do
@@ -21,6 +22,6 @@ Redmine::Plugin.register :redmine_comments do
   requires_redmine_plugin :redmine_base_rspec, :version_or_higher => '0.0.4' if Rails.env.test?
 
   project_module :issue_tracking do
-    permission :view_private_notes_from_members_with_same_role, {}, :read => true, :require => :member
+    permission :view_private_notes_from_role_or_function, {}, :read => true, :require => :member
   end
 end

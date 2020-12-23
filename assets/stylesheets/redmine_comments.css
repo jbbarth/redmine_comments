@@ -20,3 +20,22 @@
 
 /* hide standard redmine private notes for redmine 2.2+ */
 label[for=issue_private_notes], input#issue_private_notes { display:none; }
+
+.visibility .info { margin-top:5px; }
+.visibility .comment_role { background-color:#fdd; border: 1px solid #d3d3d3; border-radius:3px; padding:2px 5px 1px 4px; margin:1px 0 2px; cursor:pointer; display:inline-block; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.visibility .comment_role:hover { background-color:#ffe9e9; }
+.visibility .comment_role.involved { background-color:#cfb; }
+.visibility .comment_role.disabled { cursor:default; }
+.visibility .comment_role.involved:hover { background-color:#d7ffc6; }
+.visibility .comment_role.no-member,
+.visibility .comment_role.no-member:hover { /* background-color:#dddddd; */
+  opacity: 0.4; }
+/* font awesome icons */
+.visibility .comment_role .status-icon { width:1em; display:inline-block; }
+.visibility .comment_role:not(.involved) .fa-icon-ok { display:none; }
+.visibility .comment_role .fa-icon-ok { color:#080; }
+.visibility .comment_role.involved .fa-icon-remove { display:none; }
+.visibility .comment_role .fa-icon-remove { color:#800; }
+.visibility .comment_role .fa-icon-lock { color:#080; display:none; /* hide icon when not in a form */ }
+form .visibility .comment_role .fa-icon-lock { display:inline; }
+.visibility .comment_role:not(.disabled) .fa-icon-lock { display:none; }
