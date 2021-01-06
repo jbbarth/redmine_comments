@@ -4,11 +4,11 @@ class Journal
   acts_as_attachable
   remove_method :attachments
 
-  has_many :journal_author_roles, dependent: :destroy
-  has_many :roles, through: :journal_author_roles
+  has_many :journal_roles, dependent: :destroy
+  has_many :roles, through: :journal_roles
 
-  has_many :journal_author_functions, dependent: :destroy
-  has_many :functions, through: :journal_author_functions
+  has_many :journal_functions, dependent: :destroy
+  has_many :functions, through: :journal_functions
 
   def journal_attachments
     Attachment.where(container_id: self.id, container_type: Journal.name)
