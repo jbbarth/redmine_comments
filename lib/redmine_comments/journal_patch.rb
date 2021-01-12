@@ -7,8 +7,10 @@ class Journal
   has_many :journal_roles, dependent: :destroy
   has_many :roles, through: :journal_roles
 
-  has_many :journal_functions, dependent: :destroy
-  has_many :functions, through: :journal_functions
+  if Redmine::Plugin.installed?(:redmine_limited_visibility)
+    has_many :journal_functions, dependent: :destroy
+    has_many :functions, through: :journal_functions
+  end
 
   def journal_attachments
     Attachment.where(container_id: self.id, container_type: Journal.name)
@@ -19,11 +21,11 @@ class Journal
   end
 
   def has_one_of_these_roles?(array_of_roles)
-    self.roles.any? {|role| array_of_roles.include?(role) }
+    self.roles.any? { |role| array_of_roles.include?(role) }
   end
 
   def has_one_of_these_functions?(array_of_functions)
-    self.functions.any? {|f| array_of_functions.include?(f) }
+    self.functions.any? { |f| array_of_functions.include?(f) }
   end
 
 end
