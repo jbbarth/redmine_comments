@@ -32,6 +32,7 @@ describe "creating new comments", type: :system do
   let!(:membership) { Member.find(1) }
 
   if Redmine::Plugin.installed?(:redmine_limited_visibility)
+    fixtures :functions, :project_functions, :project_function_trackers
     let!(:function_1) { Function.find(1) }
     let!(:function_2) { Function.find(2) }
     let!(:function_3) { Function.find(3) }
