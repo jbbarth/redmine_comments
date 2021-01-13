@@ -14,12 +14,16 @@ module JournalsHelper
   def private_note_visibility_indicator(journal)
     if journal.private_notes?
       if Redmine::Plugin.installed?(:redmine_limited_visibility)
-        visibility = journal.functions.map(&:name).join(', ')
+        roles = journal.functions
       else
-        visibility = journal.roles.map(&:name).join(', ')
+        roles = journal.roles
       end
-      if visibility.present?
-        content_tag('span', "", title: visibility, :id => "journal-#{journal.id}-private_note_visibility", :class => "icon icon-group")
+      if roles.present?
+        content_tag 'span', id: "journal-#{journal.id}-private_note_visibility", class: "visibility" do
+          roles.each do |role|
+            concat(content_tag('span', role.name, class: "comment_role light-bg disabled"))
+          end
+        end
       else
         ""
       end

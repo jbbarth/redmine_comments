@@ -25,6 +25,7 @@ label[for=issue_private_notes], input#issue_private_notes { display:none; }
 .visibility .comment_role { background-color:#fdd; border: 1px solid #d3d3d3; border-radius:3px; padding:2px 5px 1px 4px; margin:1px 0 2px; cursor:pointer; display:inline-block; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 .visibility .comment_role:hover { background-color:#ffe9e9; }
 .visibility .comment_role.involved { background-color:#cfb; }
+.visibility .comment_role.light-bg { background-color:#e2e2e9;margin-left: 0.5em; }
 .visibility .comment_role.disabled { cursor:default; }
 .visibility .comment_role.involved:hover { background-color:#d7ffc6; }
 .visibility .comment_role.no-member,
