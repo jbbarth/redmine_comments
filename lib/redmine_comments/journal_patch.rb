@@ -20,12 +20,66 @@ class Journal
     journalized.respond_to?(:attachments) ? journalized.attachments : []
   end
 
-  def has_one_of_these_roles?(array_of_roles)
-    self.roles.any? { |role| array_of_roles.include?(role) }
+  # Returns a SQL condition to filter out journals with notes that are not visible to user
+  # TODO Take into account new permission and roles
+=begin
+  def self.visible_notes_condition(user = User.current, options = {})
+    global_private_notes_permission = Project.allowed_to_condition(user, :view_private_notes, options)
+    by_roles_private_notes_permission = Project.allowed_to_condition(user, :view_private_notes_from_role_or_function, options)
+    sql = <<SQL
+(#{table_name}.private_notes = ?
+OR #{table_name}.user_id = ?
+OR (#{global_private_notes_permission})
+OR (#{by_roles_private_notes_permission} AND 1=0 ))
+SQL
+    sanitize_sql_for_conditions([sql, false, user.id])
+  end
+=end
+
+  def notified_users
+    notified = journalized.notified_users
+    if private_notes?
+      ## START PATCH
+      notified_through_roles = notified_users_by_roles_and_functions(notified)
+      ## END PATCH
+      notified = notified.select { |user| user.allowed_to?(:view_private_notes, journalized.project) }
+    end
+    notified | notified_through_roles
   end
 
-  def has_one_of_these_functions?(array_of_functions)
-    self.functions.any? { |f| array_of_functions.include?(f) }
+  def notified_watchers
+    notified = journalized.notified_watchers
+    if private_notes?
+      ## START PATCH
+      notified_through_roles = notified_users_by_roles_and_functions(notified)
+      ## END PATCH
+      notified = notified.select { |user| user.allowed_to?(:view_private_notes, journalized.project) }
+    end
+    notified | notified_through_roles
+  end
+
+  def notified_users_by_roles_and_functions(users)
+    if Redmine::Plugin.installed?(:redmine_limited_visibility)
+      notified_users_by_functions(users)
+    else
+      notified_users_by_roles(users)
+    end
+  end
+
+  def notified_users_by_functions(users)
+    users.select { |user|
+      membership = Member.find_by(project: journalized.project, user: user)
+      user.allowed_to?(:view_private_notes_from_role_or_function, journalized.project) &&
+        self.functions.any? { |function| membership.functions.include?(function) }
+    }
+  end
+
+  def notified_users_by_roles(users)
+    users.select { |user|
+      membership = Member.find_by(project: journalized.project, user: user)
+      user.allowed_to?(:view_private_notes_from_role_or_function, journalized.project) &&
+        self.roles.any? { |role| membership.roles.include?(role) }
+    }
   end
 
 end
