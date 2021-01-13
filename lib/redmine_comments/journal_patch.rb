@@ -39,23 +39,24 @@ SQL
   def notified_users
     notified = journalized.notified_users
     if private_notes?
-      ## START PATCH
       notified_through_roles = notified_users_by_roles_and_functions(notified)
-      ## END PATCH
       notified = notified.select { |user| user.allowed_to?(:view_private_notes, journalized.project) }
+      notified | notified_through_roles
+    else
+      notified
     end
-    notified | notified_through_roles
   end
 
   def notified_watchers
     notified = journalized.notified_watchers
     if private_notes?
-      ## START PATCH
       notified_through_roles = notified_users_by_roles_and_functions(notified)
-      ## END PATCH
       notified = notified.select { |user| user.allowed_to?(:view_private_notes, journalized.project) }
+      notified | notified_through_roles
+    else
+      notified
     end
-    notified | notified_through_roles
+
   end
 
   def notified_users_by_roles_and_functions(users)
@@ -68,9 +69,8 @@ SQL
 
   def notified_users_by_functions(users)
     users.select { |user|
-      membership = Member.find_by(project: journalized.project, user: user)
       user.allowed_to?(:view_private_notes_from_role_or_function, journalized.project) &&
-        self.functions.any? { |function| membership.functions.include?(function) }
+        self.functions.any? { |function| Member.find_by(project: journalized.project, user: user).functions.include?(function) }
     }
   end
 
