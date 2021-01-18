@@ -38,4 +38,16 @@ class Issue
     result
   end
 
+  def last_visible_journal_with_roles_or_functions(user=User.current)
+    journals = visible_journals_with_index(user)
+    journals.select! do |journal|
+      if Redmine::Plugin.installed?(:redmine_limited_visibility)
+        journal.functions.any?
+      else
+        journal.roles.any?
+      end
+    end
+    journals.last
+  end
+
 end

@@ -3,7 +3,7 @@
 
   if Redmine::Plugin.installed?(:redmine_limited_visibility)
     user_roles = user_functions(@project, authorized_roles, User.current)
-    checked_roles = @journal.present? ? @journal.functions : default_checked_functions(@project, authorized_roles, User.current)
+    checked_roles = @journal.present? ? @journal.functions : default_checked_functions(@project, authorized_roles, User.current, @issue)
     selectable_roles = selectable_functions(@project, authorized_roles)
     functions_allowed_by_private_notes_groups = PrivateNotesGroup.where(group_id: user_roles.map(&:id)).map(&:function)
     selectable_roles = selectable_roles & (functions_allowed_by_private_notes_groups | checked_roles) if functions_allowed_by_private_notes_groups.present?
