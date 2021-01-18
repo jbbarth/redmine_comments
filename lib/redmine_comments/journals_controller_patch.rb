@@ -7,6 +7,9 @@ class JournalsController
   helper :attachments
   include AttachmentsHelper
 
+  helper :issue_comments
+  include IssueCommentsHelper
+
   private
 
   def update_visibility
