@@ -20,7 +20,7 @@ module IssueCommentsHelper
          .where("members.project_id = ?", project.id)
          .where("members.user_id = ?", user.id)
          .where("member_roles.role_id IN (?)", authorized_roles.map(&:id))
-         .where("users.status = ? ", Principal::STATUS_ACTIVE)
+         .where("users.status = ? ", Principal::STATUS_ACTIVE).distinct
   end
 
   def selectable_functions(project, authorized_roles)

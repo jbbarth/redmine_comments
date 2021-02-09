@@ -13,7 +13,7 @@ class IssueCommentsController < ApplicationController
 
     visibility_params = params[:journal][:visibility]
     if visibility_params.present?
-      visibility_ids = visibility_params.split('|').map(&:to_i)
+      visibility_ids = visibility_params.split('|').map(&:to_i).uniq
       if Redmine::Plugin.installed?(:redmine_limited_visibility)
         @journal.function_ids = visibility_ids
       else
