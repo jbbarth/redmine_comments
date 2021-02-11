@@ -44,7 +44,7 @@ module IssueCommentsHelper
     last_visible_journal.present? ? last_visible_journal.functions : user_functions(project, authorized_roles, user)
   end
 
-  def default_checked_roles(project, authorized_roles, user)
+  def default_checked_roles(project, authorized_roles, user, issue)
     last_visible_journal = issue.last_visible_journal_with_roles_or_functions(user) if issue.present?
     last_visible_journal.present? ? last_visible_journal.roles : user_roles(project, authorized_roles, user)
   end

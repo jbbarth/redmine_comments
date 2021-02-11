@@ -9,7 +9,7 @@
     selectable_roles = selectable_roles & (functions_allowed_by_private_notes_groups | checked_roles) if functions_allowed_by_private_notes_groups.present?
   else
     user_roles = user_roles(@project, authorized_roles, User.current)
-    checked_roles = @journal.present? ? @journal.roles : default_checked_roles(@project, authorized_roles, User.current)
+    checked_roles = @journal.present? ? @journal.roles : default_checked_roles(@project, authorized_roles, User.current, @issue)
     selectable_roles = selectable_roles(@project, authorized_roles)
   end
 
