@@ -22,6 +22,7 @@ class IssueCommentsController < ApplicationController
     end
 
     if @journal.save
+      @issue.touch
 
       @journal.save_attachments(params[:attachments])
       @journal.attach_saved_attachments
