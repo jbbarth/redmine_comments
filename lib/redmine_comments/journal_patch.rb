@@ -69,8 +69,9 @@ SQL
 
   def notified_users_by_functions(users)
     users.select { |user|
+      membership = Member.find_by(project: journalized.project, user: user)
       user.allowed_to?(:view_private_notes_from_role_or_function, journalized.project) &&
-        self.functions.any? { |function| Member.find_by(project: journalized.project, user: user).functions.include?(function) }
+        self.functions.any? { |function| membership.present? && membership.functions.include?(function) }
     }
   end
 
@@ -78,7 +79,7 @@ SQL
     users.select { |user|
       membership = Member.find_by(project: journalized.project, user: user)
       user.allowed_to?(:view_private_notes_from_role_or_function, journalized.project) &&
-        self.roles.any? { |role| membership.roles.include?(role) }
+        self.roles.any? { |role| membership.present? && membership.roles.include?(role) }
     }
   end
 
