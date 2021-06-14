@@ -3,7 +3,8 @@ require "spec_helper"
 describe IssueCommentsController, :type => :controller do
   include ActiveSupport::Testing::Assertions
 
-  fixtures :journals, :journal_details, :users, :projects, :issues, :members, :member_roles, :roles, :enabled_modules, :trackers
+  fixtures :journals, :journal_details, :users, :projects, :issues,
+           :members, :member_roles, :roles, :enabled_modules, :trackers, :enumerations
 
   before do
     @request.session[:user_id] = 2
