@@ -4,7 +4,7 @@ module IssueCommentsHelper
     Role.joins(:members)
         .where("members.project_id = ?", project.id)
         .uniq
-        .select { |role| role.has_permission?(:view_private_notes_from_role_or_function) }
+        .select { |role| role.has_permission?(:view_private_notes_from_role_or_function) || role.has_permission?(:view_private_notes) }
   end
 
   def user_functions(project, authorized_roles, user)
