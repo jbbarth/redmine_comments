@@ -1,27 +1,30 @@
-<h3><%= l(:label_comment) %></h3>
+<div id="issue_comments_form" style="width: 100%;display:none">
+  <h3><%= l(:label_comment) %></h3>
 
-<%= labelled_form_for :journal, @issue.journals.build, url: issue_comments_path(issue_id: @issue.id), :html => { :id => "add_comment_form" } do |f| %>
+  <%= labelled_form_for :journal, @issue.journals.build, url: issue_comments_path(issue_id: @issue.id), :html => { :id => "add_comment_form" } do |f| %>
 
-  <%= error_messages_for 'issue' %>
-  <div class="box">
+    <%= error_messages_for 'issue' %>
+    <div class="box">
 
-    <%= render "issue_comments/visibility_form_fields" %>
 
-    <%= f.text_area :notes, :cols => 60, :rows => 10, :class => 'wiki-edit', :no_label => true, :id => 'issue_comment' %>
-    <%= wikitoolbar_for 'issue_comment' %>
+      <%= render "issue_comments/visibility_form_fields" %>
 
-    <%= f.hidden_field :private_notes, :value => true %>
+      <%= f.text_area :notes, :cols => 60, :rows => 10, :class => 'wiki-edit', :no_label => true, :id => 'issue_comment' %>
+      <%= wikitoolbar_for 'issue_comment' %>
 
-    <fieldset>
-      <legend><%= l(:label_attachment_plural) %></legend>
-      <div id="new-attachments" style="display:inline-block;">
-        <%= render :partial => 'attachments/form', :locals => { :container => Journal.new } %>
-      </div>
-    </fieldset>
-  </div>
+      <%= f.hidden_field :private_notes, :value => true %>
 
-  <%= submit_tag l(:button_add) %>
+      <fieldset>
+        <legend><%= l(:label_attachment_plural) %></legend>
+        <div id="new-attachments" style="display:inline-block;">
+          <%= render :partial => 'attachments/form', :locals => { :container => Journal.new } %>
+        </div>
+      </fieldset>
+    </div>
 
-<% end %>
+    <%= submit_tag l(:button_add) %>
 
-<div id="new_comment_preview" class="wiki"></div>
+  <% end %>
+
+  <div id="new_comment_preview" class="wiki"></div>
+</div>
