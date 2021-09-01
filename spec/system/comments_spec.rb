@@ -59,7 +59,7 @@ describe "creating new comments", type: :system do
     journal = issue.journals.last
     expect(journal.private_notes).to be_truthy
     expect(journal.notes).to eq 'Here is a quick note'
-    expect(journal.roles).to be_empty
+    expect(journal.roles).to be_empty if Redmine::Plugin.installed?(:redmine_limited_visibility)
 
     issue.reload
     expect(issue.updated_on).to be > journal.created_on
