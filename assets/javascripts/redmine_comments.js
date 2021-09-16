@@ -16,10 +16,11 @@ $(function () {
         if (!$(this).hasClass('disabled')) {
             $(this).toggleClass('involved');
             var authorized = [];
-            $('.visibility .comment_role.involved').each(function () {
+            var journal_id = $(this).data('journal-id');
+            $('.visibility .comment_role.involved[data-journal-id="' + journal_id + '"]').each(function () {
                 authorized.push($(this).data('role-id'))
             });
-            $('#journal_visibility').val(authorized.join('|'));
+            $('#journal_visibility[data-id="' + journal_id + '"]').val(authorized.join('|'));
 
             // Update disabled class
             form_id = $(this).closest('form').attr('id')

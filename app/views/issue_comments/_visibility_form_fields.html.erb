@@ -26,4 +26,4 @@
     <%= render "issue_comments/visibility_role", :function => role, styles: css_classes %>
   <% end %>
 </div>
-<%= hidden_field_tag "journal[visibility]", checked_roles.map(&:id).join('|'), id: "journal_visibility" %>
+<%= hidden_field_tag "journal[visibility]", checked_roles.map(&:id).join('|'), id: "journal_visibility", data: { id:  @journal.present? ? @journal.id : 0  } %>
