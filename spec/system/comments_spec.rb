@@ -91,6 +91,53 @@ describe "creating new comments", type: :system do
       expect(journal.functions).to eq [function_3]
     end
 
+    it "should not confuse the roles in the case of opening and edit multi comments" do
+      Role.find_by_name('Manager').add_permission! :view_private_notes_from_role_or_function
+      Role.find_by_name('Manager').add_permission! :edit_issue_notes
+      membership.functions = [function_1, function_2, function_3, function_4]
+
+      journal_ids = []
+      3.times do |i|
+        journal = Journal.create(:journalized => issue,
+                             :user => user_jsmith,
+                             :notes => "test#{i + 1}",
+                             :private_notes => true)
+
+        # set for journal[0] (function1), journal[1] (function2), journal[2] (function3)
+        journal.function_ids = [i + 1]
+        journal_ids.push(journal.id)
+      end
+
+      visit '/issues/1?tab=notes'
+
+      3.times do |i|
+        click_link('Edit', :href =>"/journals/#{journal_ids.reverse[i]}/edit")
+      end
+
+      # set for the  third journal (function1,function2), set for the second journal (function3), set for the first journal (function3, function4)
+      3.times do |i|
+        journal_id = journal_ids.reverse[i]
+        2.times do |j|
+          role_id = i + j +1
+          page.find('span[data-role-id="' + role_id.to_s + '"][data-journal-id="' + journal_id.to_s + '"]').click
+        end
+      end
+
+      # Make sure the journal[0] has (function1,function3, function4), the journal[1] has (function2,function3),the journal[2] has (function1,function2,function3)
+      all('input[name="commit"]')[2].click
+      find("#journal-#{journal_ids[2]}-notes", visible: true, wait: 10)
+
+      all('input[name="commit"]')[1].click
+      find("#journal-#{journal_ids[1]}-notes", visible: true, wait: 10)
+
+      page.find('input[name="commit"]').click
+      find("#journal-#{journal_ids[0]}-notes", visible: true, wait: 10)
+
+      expect(Journal.find(journal_ids[2]).functions).to eq [function_1, function_2, function_3]
+      expect(Journal.find(journal_ids[1]).functions).to eq [function_2, function_3]
+      expect(Journal.find(journal_ids[0]).functions).to eq [function_1, function_3, function_4]
+
+    end
   end
 
 end
