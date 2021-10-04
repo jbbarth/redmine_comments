@@ -13,21 +13,21 @@ describe IssueCommentsController, :type => :controller do
   end
 
   context "when new comment is added to issue" do
-    it "should forbid an user with incorrect permission" do
+    it "should forbid a user with incorrect permission" do
       @request.session[:user_id] = 3
       post :create, params: { issue_id: @issue.id, journal: { notes: "my private comment" } }
 
       expect(response).to have_http_status(403)
     end
 
-    it "should permit an user with correct permission" do
+    it "should permit a user with correct permission" do
       @request.session[:user_id] = 2
       post :create, params: { issue_id: @issue.id, :journal => { notes: "my private comment" } }
 
       expect(response).not_to have_http_status(403)
     end
 
-    it "should create a new private comment belonging to the the issue" do
+    it "should create a new private comment belonging to the issue" do
       @request.session[:user_id] = 2
       
       expect {
