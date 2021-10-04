@@ -7,6 +7,25 @@ module IssueCommentsHelper
         .select { |role| role.has_permission?(:view_private_notes_from_role_or_function) || role.has_permission?(:view_private_notes) }
   end
 
+  def get_selectable_checked_roles(project, journal, issue)
+    authorized_roles = roles_allowed_to_view_private_notes_from_role_or_function(project)
+
+    if Redmine::Plugin.installed?(:redmine_limited_visibility)
+      user_roles = user_functions(project, authorized_roles, User.current)
+      checked_roles = journal.present? ? journal.functions : default_checked_functions(project, authorized_roles, User.current, issue)
+      selectable_roles = selectable_functions(project, authorized_roles)
+      functions_allowed_by_private_notes_groups = PrivateNotesGroup.where(group_id: user_roles.map(&:id)).map(&:function)
+      selectable_roles = selectable_roles & (functions_allowed_by_private_notes_groups | checked_roles) if functions_allowed_by_private_notes_groups.present?
+    else
+      user_roles = user_roles(project, authorized_roles, User.current)
+      checked_roles = journal.present? ? journal.roles : default_checked_roles(project, authorized_roles, User.current, issue)
+      selectable_roles = selectable_roles(project, authorized_roles)
+     end
+
+    selectable_roles = selectable_roles | checked_roles | user_roles
+    return selectable_roles, checked_roles
+  end
+
   def user_functions(project, authorized_roles, user)
     user_roles_or_function(Function, project, authorized_roles, user)
   end
