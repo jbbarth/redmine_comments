@@ -2,7 +2,10 @@ class IssueCommentsController < ApplicationController
   before_action :find_issue, except: [:destroy_attachment]
   before_action :authorize, except: [:destroy_attachment]
 
+  include IssueCommentsHelper
+
   def new
+    @selectable_roles, @checked_roles = get_selectable_checked_roles(@project, @journal, @issue)
   end
 
   def create
