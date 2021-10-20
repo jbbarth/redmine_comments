@@ -140,4 +140,14 @@ describe "creating new comments", type: :system do
     end
   end
 
+  it "should add new comment by right click on the comment link to open the form in a new tab" do
+
+    expect {
+      visit 'issue_comments/new?issue_id=1'
+      fill_in 'journal[notes]', with: 'test comment in a new tab'
+
+      click_button 'commit'
+    }.to change(issue.journals, :size).by(1)
+
+  end
 end
