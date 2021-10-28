@@ -1,0 +1,30 @@
+<%#= render :partial => 'notes_form' %>
+<script>
+  // change the attributte data-remote in the form so that we can use the page in format html
+ /* var form = $('[data-remote="true"]');
+  var token = "<%= form_authenticity_token %>";
+  form.attr("data-remote", false);
+  form.append("<input type=hidden name='authenticity_token' value=" + token + ">");*/
+</script>
+<%= form_tag(journal_path(@journal),
+             :remote => false,
+             :method => 'put',
+             :id => "journal-#{@journal.id}-form") do %>
+    <%= render "issue_comments/visibility_form_fields" if @journal.private_notes %>
+    <%= label_tag "notes", l(:description_notes), :class => "hidden-for-sighted", :for => "journal_#{@journal.id}_notes" %>
+    <%= text_area_tag 'journal[notes]', @journal.notes, :id => "journal_#{@journal.id}_notes", :class => 'wiki-edit',
+          :rows => (@journal.notes.blank? ? 10 : [[10, @journal.notes.length / 50].max, 100].min),
+          :data => {
+              :auto_complete => true
+          }
+    %>
+    <% if @journal.safe_attribute? 'private_notes' %>
+      <%= hidden_field_tag 'journal[private_notes]', '0' %>
+      <%= check_box_tag 'journal[private_notes]', '1', @journal.private_notes, :id => "journal_#{@journal.id}_private_notes" %>
+      <label for="journal_<%= @journal.id %>_private_notes"><%= l(:field_private_notes) %></label>
+    <% end %>
+    <%= call_hook(:view_journals_notes_form_after_notes, { :journal => @journal}) %>
+    <p><%= submit_tag l(:button_save) %>
+    <%= link_to l(:button_cancel), '#', :onclick => "$('#journal-#{@journal.id}-form').remove(); $('#journal-#{@journal.id}-notes').show(); return false;" %></p>
+<% end %>
+<%= wikitoolbar_for "journal_#{@journal.id}_notes", preview_issue_path(:project_id => @project, :issue_id => @journal.issue) %>

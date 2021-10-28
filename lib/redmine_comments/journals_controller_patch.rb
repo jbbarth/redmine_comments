@@ -11,6 +11,14 @@ class JournalsController
   helper :issue_comments
   include IssueCommentsHelper
 
+  def edit
+    (render_403; return false) unless @journal.editable_by?(User.current)
+    respond_to do |format|
+      format.html { render :template => "journals/edit_journal" }
+      format.js
+    end
+  end
+
   private
 
   def get_roles_allowed_to_view
