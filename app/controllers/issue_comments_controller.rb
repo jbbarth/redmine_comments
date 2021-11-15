@@ -5,7 +5,6 @@ class IssueCommentsController < ApplicationController
   include IssueCommentsHelper
 
   def new
-    @selectable_roles, @checked_roles = get_selectable_checked_roles(@project, @journal, @issue)
   end
 
   def create

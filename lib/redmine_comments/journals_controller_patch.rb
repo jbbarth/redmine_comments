@@ -3,7 +3,6 @@ require_dependency 'journals_controller'
 class JournalsController
 
   append_before_action :update_visibility, :only => [:update]
-  before_action :get_roles_allowed_to_view, :only => [:edit]
 
   helper :attachments
   include AttachmentsHelper
@@ -12,10 +11,6 @@ class JournalsController
   include IssueCommentsHelper
 
   private
-
-  def get_roles_allowed_to_view
-   @selectable_roles, @checked_roles = get_selectable_checked_roles(@project, @journal, @issue)
-  end
 
   def update_visibility
     visibility_params = params[:journal][:visibility]
