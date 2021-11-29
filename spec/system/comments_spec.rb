@@ -48,7 +48,7 @@ describe "creating new comments", type: :system do
     expect {
       visit '/issues/1'
       click_on "Comment", match: :first
-      within 'form#add_comment_form' do
+      within 'form#add_issue_comment_form' do
         expect(page).to have_selector(".info", text: "Private comments are only visible with specific roles.")
         expect(page).to_not have_selector(".comment_role")
         fill_in 'journal[notes]', with: 'Here is a quick note'
@@ -74,7 +74,7 @@ describe "creating new comments", type: :system do
       expect {
         visit '/issues/1'
         click_on "Comment", match: :first
-        within 'form#add_comment_form' do
+        within 'form#add_issue_comment_form' do
           expect(page).to have_selector(".info", text: "Private comments are only visible with specific roles.")
           expect(page).to have_selector(".comment_role", text: "function1")
           fill_in 'journal[notes]', with: 'Here is a quick note'
