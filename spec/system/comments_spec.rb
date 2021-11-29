@@ -150,4 +150,18 @@ describe "creating new comments", type: :system do
     }.to change(issue.journals, :size).by(1)
 
   end
+
+  it "Should edit comment by rigth click on the comment link to open the form in a new tab" do
+    Role.find(1).add_permission!(:edit_issue_notes)
+    editnote_text = 'test edit comme'
+
+    visit 'journals/1/edit'
+    within 'form#journal-1-form' do
+      fill_in 'journal[notes]', with: editnote_text
+    end
+    click_button 'commit'
+
+    expect(journals.find(1).first.notes).to eq editnote_text
+  end
+
 end
