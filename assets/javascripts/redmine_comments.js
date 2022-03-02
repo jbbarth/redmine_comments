@@ -41,8 +41,8 @@ $(document).ready(function(){
       for (var i = 0 ; i < items.length ; i++) {
         var item = items[i];
 
-        if (item.type.indexOf("image") != -1) {
-          var blob = item.getAsFile();
+        var blob = item.getAsFile();
+        if (item.type.indexOf("image") != -1 && blob) {
           var date = new Date();
           var filename = 'clipboard-'
             + date.getFullYear()
