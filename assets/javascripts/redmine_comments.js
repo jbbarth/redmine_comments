@@ -40,7 +40,9 @@ $(document).ready(function(){
       var items = clipboardData.items
       for (var i = 0 ; i < items.length ; i++) {
         var item = items[i];
-
+        /** for the case of paste image mixed with other DataTransferItem **/
+        // if (item.type.indexOf("image") != -1) {
+        // var blob = item.getAsFile();
         var blob = item.getAsFile();
         if (item.type.indexOf("image") != -1 && blob) {
           var date = new Date();
@@ -54,6 +56,8 @@ $(document).ready(function(){
             + '.' + blob.name.split('.').pop();
           var file = new Blob([blob], {type: blob.type});
           file.name = filename;
+          /* for the case of more than one form on the same page */
+          // var inputEl = $(this).find('input:file.filedrop');
           // get input file in the closest form
           var inputEl = $(this).closest("form").find('input:file.filedrop');
           handleFileDropEvent.target = e.target;
