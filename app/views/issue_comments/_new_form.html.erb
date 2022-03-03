@@ -28,3 +28,27 @@
 
   <div id="new_comment_preview" class="wiki"></div>
 </div>
+
+<script>
+    /* override setAttachmentUploader of RedmineWysiwygEditor, in order to override the function uploader whose is inside the function initRedmineWysiwygEditor
+    for replace var input = $('input:file.filedrop').first(); by this._jstEditor.closest("form").find('input:file.filedrop');
+    */
+    if (typeof RedmineWysiwygEditor === 'function') {
+        RedmineWysiwygEditor.prototype.setAttachmentUploader = function(handler) {
+            this._attachmentUploader = function(file) {
+                var input = this._jstEditor.closest("form").find('input:file.filedrop');
+
+                if (input.length > 0) {
+                    var sizeExceeded = uploadAndAttachFiles([file], input);
+
+                    return !sizeExceeded;
+                } else {
+                    // For Redmine 3.3
+                    uploadAndAttachFiles([file], $('input:file.file_selector'));
+
+                    return true;
+                }
+            };
+        };
+    }
+</script>
