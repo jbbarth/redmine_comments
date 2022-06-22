@@ -2,3 +2,4 @@ en:
   text_info_comment_visibility: "Private comments are only visible with specific roles."
   permission_view_private_notes_from_role_or_function: "View private notes visible by my roles"
   label_comment: "Comment"
+  field_private_notes: "Private comment"
