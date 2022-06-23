@@ -19,6 +19,7 @@ describe Journal do
   if Redmine::Plugin.installed?(:redmine_limited_visibility)
     let!(:contractor_role) { Function.where(name: "Contractors").first_or_create }
     let!(:project_office_role) { Function.where(name: "Project Office").first_or_create }
+    fixtures :functions
 
     describe "notified users" do
 

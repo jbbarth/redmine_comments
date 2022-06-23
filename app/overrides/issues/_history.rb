@@ -1,6 +1,6 @@
 Deface::Override.new :virtual_path  => 'issues/tabs/_history',
                      :name          => 'add-container-to-private-notes',
-                     :surround      => "div:contains(@id, 'change-')",
+                     :surround      => "div:contains(id, 'change-')",
                      :text          => <<-EOS
 <% if journal.private_notes? %>
   <div class='issue-private-note-container'>
