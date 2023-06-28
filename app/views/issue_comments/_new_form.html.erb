@@ -16,10 +16,11 @@
 
       <fieldset>
         <legend><%= l(:label_attachment_plural) %></legend>
-        <div id="new-attachments" style="display:inline-block;">
+        <div class="new-attachments" style="display:inline-block;">
           <%= render :partial => 'attachments/form', :locals => { :container => Journal.new } %>
         </div>
       </fieldset>
+
     </div>
 
     <%= submit_tag l(:button_add) %>
