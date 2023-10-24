@@ -1,6 +1,6 @@
 require_dependency 'application_helper'
 
-module ApplicationHelper
+module RedmineComments::ApplicationHelperPatch
 
   def parse_inline_attachments(text, project, obj, attr, only_path, options)
     return if options[:inline_attachments] == false
@@ -31,4 +31,8 @@ module ApplicationHelper
     end
   end
 
+end
+
+unless ApplicationHelper.included_modules.include?(RedmineComments::ApplicationHelperPatch)
+  ApplicationHelper.send(:include, RedmineComments::ApplicationHelperPatch)
 end

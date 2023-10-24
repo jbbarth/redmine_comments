@@ -40,7 +40,7 @@ describe IssueCommentsController, :type => :controller do
 
     it "should attach saved attachments to journal object" do
       set_tmp_attachments_directory
-      attachment = Attachment.create!(:file => fixture_file_upload("files/testfile.txt", "text/plain", true), :author_id => 2)
+      attachment = Attachment.create!(file: fixture_file_upload("files/testfile.txt", "text/plain", true), :author_id => 2)
 
       assert_difference 'Journal.count' do
         assert_no_difference 'JournalDetail.count' do

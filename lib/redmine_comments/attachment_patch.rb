@@ -1,6 +1,6 @@
 require_dependency 'attachment'
 
-class Attachment
+module RedmineComments::AttachmentPatch
   def project
     if container.is_a?(Journal)
       container.try(:journalized).try(:project)
@@ -45,3 +45,5 @@ class Attachment
     end
   end
 end
+
+Attachment.prepend RedmineComments::AttachmentPatch

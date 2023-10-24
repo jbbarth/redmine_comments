@@ -7,4 +7,16 @@ module RedmineComments
         javascript_include_tag('redmine_comments.js', plugin: 'redmine_comments')
     end
   end
+
+  class ModelHook < Redmine::Hook::Listener
+    def after_plugins_loaded(_context = {})
+      require_relative 'journals_controller_patch'
+      require_relative 'issue_patch'
+      require_relative 'attachment_patch'
+      require_relative 'application_helper_patch'
+      require_relative 'journals_helper_patch'
+      require_relative 'issues_controller_patch'
+      require_relative 'journal_patch'
+    end
+  end
 end

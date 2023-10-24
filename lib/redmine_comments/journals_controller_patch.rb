@@ -1,6 +1,22 @@
 require_dependency 'journals_controller'
 
+module RedmineComments::JournalsControllerPatch
+  def update_visibility
+    visibility_params = params[:journal][:visibility]
+    if visibility_params.present?
+      visibility_ids = visibility_params.split('|').map(&:to_i)
+      if Redmine::Plugin.installed?(:redmine_limited_visibility)
+        @journal.function_ids = visibility_ids
+      else
+        @journal.role_ids = visibility_ids
+      end
+    end
+  end
+end
+
 class JournalsController
+
+  prepend RedmineComments::JournalsControllerPatch
 
   append_before_action :update_visibility, :only => [:update]
 
@@ -15,20 +31,6 @@ class JournalsController
     respond_to do |format|
       format.html { render :template => "journals/edit_journal" }
       format.js
-    end
-  end
-
-  private
-
-  def update_visibility
-    visibility_params = params[:journal][:visibility]
-    if visibility_params.present?
-      visibility_ids = visibility_params.split('|').map(&:to_i)
-      if Redmine::Plugin.installed?(:redmine_limited_visibility)
-        @journal.function_ids = visibility_ids
-      else
-        @journal.role_ids = visibility_ids
-      end
     end
   end
 

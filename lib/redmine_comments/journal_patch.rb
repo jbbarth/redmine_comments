@@ -1,5 +1,9 @@
 require_dependency 'journal'
 
+module RedmineComments::JournalPatch
+
+end
+
 class Journal
   acts_as_attachable
   remove_method :attachments

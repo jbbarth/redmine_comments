@@ -1,16 +1,15 @@
 require_dependency 'issue'
 
-class Issue
-
+module RedmineComments::IssuePatch
   # Returns the journals that are visible to user with their index
   # Used to display the issue history
-  def visible_journals_with_index(user=User.current)
+  def visible_journals_with_index(user = User.current)
     result = journals.
-        preload(:details).
-        preload(:user => :email_address).
-        reorder(:created_on, :id).to_a
+      preload(:details).
+      preload(:user => :email_address).
+      reorder(:created_on, :id).to_a
 
-    result.each_with_index {|j,i| j.indice = i+1}
+    result.each_with_index { |j, i| j.indice = i + 1 }
 
     unless user.allowed_to?(:view_private_notes, project)
       ####
@@ -34,11 +33,11 @@ class Issue
     end
 
     Journal.preload_journals_details_custom_fields(result)
-    result.select! {|journal| journal.notes? || journal.visible_details.any?}
+    result.select! { |journal| journal.notes? || journal.visible_details.any? }
     result
   end
 
-  def last_visible_journal_with_roles_or_functions(user=User.current)
+  def last_visible_journal_with_roles_or_functions(user = User.current)
     journals = visible_journals_with_index(user)
     journals.select! do |journal|
       if Redmine::Plugin.installed?(:redmine_limited_visibility)
@@ -49,5 +48,6 @@ class Issue
     end
     journals.last
   end
-
 end
+
+Issue.prepend RedmineComments::IssuePatch

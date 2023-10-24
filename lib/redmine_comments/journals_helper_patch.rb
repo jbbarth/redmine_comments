@@ -1,6 +1,6 @@
 require_dependency 'journals_helper'
 
-module JournalsHelper
+module RedmineComments::JournalsHelperPatch
   def render_private_notes_indicator(journal)
     content = journal.private_notes? ? l(:field_is_private) : ''
     css_classes = journal.private_notes? ? 'badge badge-private private' : ''
@@ -32,3 +32,5 @@ module JournalsHelper
     end
   end
 end
+
+JournalsHelper.prepend RedmineComments::JournalsHelperPatch

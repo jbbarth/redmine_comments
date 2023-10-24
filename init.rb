@@ -1,15 +1,5 @@
 require 'redmine'
-require 'redmine_comments/hooks'
-
-ActiveSupport::Reloader.to_prepare do
-  require_dependency 'redmine_comments/journals_controller_patch'
-  require_dependency 'redmine_comments/journal_patch'
-  require_dependency 'redmine_comments/issue_patch'
-  require_dependency 'redmine_comments/attachment_patch'
-  require_dependency 'redmine_comments/application_helper_patch'
-  require_dependency 'redmine_comments/journals_helper_patch'
-  require_dependency 'redmine_comments/issues_controller_patch'
-end
+require_relative 'lib/redmine_comments/hooks'
 
 Redmine::Plugin.register :redmine_comments do
   name 'Redmine Comments plugin'
