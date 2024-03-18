@@ -4,8 +4,13 @@ module RedmineComments::JournalPatch
 
 end
 
-class Journal
+class Journal < ActiveRecord::Base
+  include RedmineComments::JournalPatch
+
   acts_as_attachable
+
+  # Ensure method :attachments is removed
+  def attachments;end
   remove_method :attachments
 
   has_many :journal_roles, dependent: :destroy
