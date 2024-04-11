@@ -10,7 +10,8 @@ class Journal < ActiveRecord::Base
   acts_as_attachable
 
   # Ensure method :attachments is removed
-  def attachments;end
+  def attachments; end
+
   remove_method :attachments
 
   has_many :journal_roles, dependent: :destroy

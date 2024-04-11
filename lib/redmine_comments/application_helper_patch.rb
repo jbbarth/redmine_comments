@@ -33,6 +33,5 @@ module RedmineComments::ApplicationHelperPatch
 
 end
 
-unless ApplicationHelper.included_modules.include?(RedmineComments::ApplicationHelperPatch)
-  ApplicationHelper.send(:include, RedmineComments::ApplicationHelperPatch)
-end
+ApplicationHelper.prepend RedmineComments::ApplicationHelperPatch
+ActionView::Base.prepend ApplicationHelper

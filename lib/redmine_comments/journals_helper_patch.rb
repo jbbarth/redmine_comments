@@ -34,3 +34,4 @@ module RedmineComments::JournalsHelperPatch
 end
 
 JournalsHelper.prepend RedmineComments::JournalsHelperPatch
+ActionView::Base.send(:include, JournalsHelper)

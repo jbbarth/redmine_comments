@@ -133,9 +133,9 @@ describe "creating new comments", type: :system do
       page.find('input[name="commit"]').click
       find("#journal-#{journal_ids[0]}-notes", visible: true, wait: 10)
 
-      expect(Journal.find(journal_ids[2]).functions).to eq [function_1, function_2, function_3]
-      expect(Journal.find(journal_ids[1]).functions).to eq [function_2, function_3]
-      expect(Journal.find(journal_ids[0]).functions).to eq [function_1, function_3, function_4]
+      expect(Journal.find(journal_ids[2]).functions.sort).to eq [function_1, function_2, function_3]
+      expect(Journal.find(journal_ids[1]).functions.sort).to eq [function_2, function_3]
+      expect(Journal.find(journal_ids[0]).functions.sort).to eq [function_1, function_3, function_4]
 
     end
   end
