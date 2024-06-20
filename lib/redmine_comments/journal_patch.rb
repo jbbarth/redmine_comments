@@ -9,10 +9,13 @@ class Journal < ActiveRecord::Base
 
   acts_as_attachable
 
-  # Ensure method :attachments is removed
-  def attachments; end
-
-  remove_method :attachments
+  def attachments
+    if private_notes?
+      super
+    else
+      standard_attachments_method
+    end
+  end
 
   has_many :journal_roles, dependent: :destroy
   has_many :roles, through: :journal_roles
@@ -27,7 +30,8 @@ class Journal < ActiveRecord::Base
   end
 
   def standard_attachments_method
-    journalized.respond_to?(:attachments) ? journalized.attachments : []
+    ids = details.select {|d| d.property == 'attachment' && d.value.present?}.map(&:prop_key)
+    Attachment.where(id: ids).sort_by {|a| ids.index(a.id.to_s)}
   end
 
   # Returns a SQL condition to filter out journals with notes that are not visible to user

@@ -23,7 +23,7 @@ module RedmineComments::ApplicationHelperPatch
           if !desc.blank? && alttext.blank?
             alt = " title=\"#{desc}\" alt=\"#{desc}\""
           end
-          "src=\"#{image_url}\"#{alt} loading=\"lazy\""
+          "src=\"#{image_url}\"#{alt}#{" loading=\"lazy\"" if Redmine::VERSION::MAJOR >= 5}"
         else
           m
         end
