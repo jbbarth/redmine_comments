@@ -30,8 +30,12 @@ class Journal < ActiveRecord::Base
   end
 
   def standard_attachments_method
-    ids = details.select {|d| d.property == 'attachment' && d.value.present?}.map(&:prop_key)
-    Attachment.where(id: ids).sort_by {|a| ids.index(a.id.to_s)}
+    if Redmine::VERSION::MAJOR >= 5
+      ids = details.select {|d| d.property == 'attachment' && d.value.present?}.map(&:prop_key)
+      Attachment.where(id: ids).sort_by {|a| ids.index(a.id.to_s)}
+    else
+      journalized.respond_to?(:attachments) ? journalized.attachments : []
+    end
   end
 
   # Returns a SQL condition to filter out journals with notes that are not visible to user
