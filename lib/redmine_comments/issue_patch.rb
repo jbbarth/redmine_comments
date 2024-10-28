@@ -5,6 +5,7 @@ module RedmineComments::IssuePatch
   # Used to display the issue history
   def visible_journals_with_index(user = User.current)
     result = journals.
+      includes(:functions, :roles).
       preload(:details).
       preload(:user => :email_address).
       reorder(:created_on, :id).to_a
