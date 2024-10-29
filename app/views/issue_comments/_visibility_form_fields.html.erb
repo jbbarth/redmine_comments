@@ -8,8 +8,9 @@
     <% disabled = "disabled" if involved.present? && @checked_roles.size == 1 %>
     <% css_classes = "#{involved} #{disabled} " %>
     <% if Redmine::Plugin.installed?(:redmine_limited_visibility) %>
+      <% @users_by_function ||= @project.users_by_function if @project.present? %>
       <%= render "issue_comments/visibility_role", :function => role, styles: css_classes %>
     <% end %>
   <% end %>
 </div>
-<%= hidden_field_tag "journal[visibility]", @checked_roles.map(&:id).join('|'), id: "journal_visibility", data: { id:  @journal.present? ? @journal.id : 0  } %>
+<%= hidden_field_tag "journal[visibility]", @checked_roles.map(&:id).join('|'), id: "journal_visibility", data: { id: @journal.present? ? @journal.id : 0 } %>
