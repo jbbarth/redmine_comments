@@ -1,5 +1,5 @@
 fr:
-  text_info_comment_visibility: "Les commentaires privés ne sont visibles que par certains rôles."
+  text_info_comment_visibility: "Les notes privées ne sont visibles que par certains rôles."
   permission_view_private_notes_from_role_or_function: "Voir les notes privées visibles pour mes rôles"
-  label_comment: "Commenter"
-  field_private_comment: "Commentaire privé"
+  label_comment: "Note privée"
+  field_private_comment: "Note privée"
