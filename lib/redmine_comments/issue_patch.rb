@@ -4,8 +4,9 @@ module RedmineComments::IssuePatch
   # Returns the journals that are visible to user with their index
   # Used to display the issue history
   def visible_journals_with_index(user = User.current)
-    result = journals.
-      includes(:functions, :roles).
+    result = journals
+    result = result.includes(:functions) if Redmine::Plugin.installed?(:redmine_limited_visibility)
+    result = result.includes(:roles).
       preload(:details).
       preload(:user => :email_address).
       reorder(:created_on, :id).to_a

@@ -14,7 +14,7 @@ def log_user(login, password)
     fill_in 'password', with: password
     find('input[name=login]').click
   end
-  expect(current_path).to eq '/my/page'
+  expect(page).to have_current_path('/my/page', wait: true)
 end
 
 describe "creating new comments", type: :system do
@@ -48,15 +48,19 @@ describe "creating new comments", type: :system do
     expect {
       visit '/issues/1'
       click_on "Comment", match: :first
+
+      expect(page).to have_css('form#add_issue_comment_form') # Waiting for the form to disappear
+
       within 'form#add_issue_comment_form' do
         expect(page).to have_selector(".info", text: "Private comments are only visible with specific roles.")
         expect(page).to_not have_selector(".comment_role")
         fill_in 'journal[notes]', with: 'Here is a quick note'
         click_on 'Add'
       end
-    }.to change(issue.journals, :size).by(1)
+      expect(page).to have_no_css('form#add_issue_comment_form') # Waiting for the form to disappear
+    }.to change { issue.journals.reload.size }.by(1)
 
-    journal = issue.journals.last
+    journal = issue.journals.reload.last
     expect(journal.private_notes).to be_truthy
     expect(journal.notes).to eq 'Here is a quick note'
     expect(journal.roles).to be_empty if Redmine::Plugin.installed?(:redmine_limited_visibility)
@@ -82,7 +86,7 @@ describe "creating new comments", type: :system do
           page.find('.comment_role', text: 'function2').click
           click_on 'Add'
         end
-      }.to change(issue.journals, :size).by(1)
+      }.to change { issue.journals.reload.size }.by(1)
 
       journal = issue.journals.last
       expect(journal.private_notes).to be_truthy
@@ -99,9 +103,9 @@ describe "creating new comments", type: :system do
       journal_ids = []
       3.times do |i|
         journal = Journal.create(:journalized => issue,
-                             :user => user_jsmith,
-                             :notes => "test#{i + 1}",
-                             :private_notes => true)
+                                 :user => user_jsmith,
+                                 :notes => "test#{i + 1}",
+                                 :private_notes => true)
 
         # set for journal[0] (function1), journal[1] (function2), journal[2] (function3)
         journal.function_ids = [i + 1]
@@ -111,7 +115,7 @@ describe "creating new comments", type: :system do
       visit '/issues/1?tab=notes'
 
       3.times do |i|
-        click_link('Edit', :href =>"/journals/#{journal_ids.reverse[i]}/edit")
+        click_link('Edit', :href => "/journals/#{journal_ids.reverse[i]}/edit")
       end
 
       # set for the  third journal (function1,function2), set for the second journal (function3), set for the first journal (function3, function4)
@@ -140,20 +144,20 @@ describe "creating new comments", type: :system do
     end
   end
 
-  it "should add new comment by right click on the comment link to open the form in a new tab" do
-
+  it "allows to add a new comment from the form in a new tab" do
     expect {
       visit 'issue_comments/new?issue_id=1'
       fill_in 'journal[notes]', with: 'test comment in a new tab'
 
       click_button 'commit'
-    }.to change(issue.journals, :size).by(1)
 
+      expect(page).to have_current_path('/issues/1', wait: true)
+    }.to change { issue.journals.reload.size }.by(1)
   end
 
-  it "Should edit comment by rigth click on the comment link to open the form in a new tab" do
+  it "allows to right click on the comment link to open the form in a new tab" do
     Role.find(1).add_permission!(:edit_issue_notes)
-    editnote_text = 'test edit comme'
+    editnote_text = 'test edit comment'
 
     visit 'journals/1/edit'
     within 'form#journal-1-form' do
@@ -161,7 +165,9 @@ describe "creating new comments", type: :system do
     end
     click_button 'commit'
 
-    expect(journals.find(1).first.notes).to eq editnote_text
+    expect(page).to have_current_path('/issues/1', wait: true)
+
+    expect(Journal.find(1).notes).to eq editnote_text
   end
 
 end
