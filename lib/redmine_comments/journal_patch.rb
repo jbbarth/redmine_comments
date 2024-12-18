@@ -4,7 +4,7 @@ module RedmineComments::JournalPatch
 
 end
 
-class Journal < ApplicationRecord
+class Journal
   include RedmineComments::JournalPatch
 
   acts_as_attachable
