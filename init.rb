@@ -6,7 +6,7 @@ Redmine::Plugin.register :redmine_comments do
   description 'Better private notes in issues for staff users'
   author 'Jean-Baptiste BARTH'
   author_url 'mailto:jeanbaptiste.barth@gmail.com'
-  version '6.0.2'
+  version '6.0.5'
   url 'https://github.com/jbbarth/redmine_comments'
   requires_redmine :version_or_higher => '2.5.0'
   requires_redmine_plugin :redmine_base_deface, :version_or_higher => '0.0.1'
