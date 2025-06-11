@@ -7,14 +7,16 @@ module RedmineComments::ApplicationHelperPatch
 
     # when using an image link, try to use an attachment, if possible
     attachments = options[:attachments] || []
-    if obj.is_a?(Journal)
-      attachments += obj.journalized.attachments if obj.journalized.respond_to?(:attachments)
-    else
-      attachments += obj.attachments if obj.respond_to?(:attachments)
-    end
 
     ## START PATCH
+    ##
+    if obj.is_a?(Journal)
+      attachments += obj.journalized.attachments if obj.journalized.respond_to?(:attachments)
+    end
+
+    attachments += obj.attachments if obj.respond_to?(:attachments)
     attachments += obj.standard_attachments_method if obj.respond_to?(:standard_attachments_method)
+    ##
     ## END PATCH
 
     if attachments.present?
